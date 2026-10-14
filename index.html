@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> LLM 👻</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>   
+    <script scr="app.js" defer></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!------------ TOP BAR ------------>
+    <div class="horizontal-container">
+        <p>HI</p>
+        <p>HELLO</p>
+    </div>
+
+    <!------------ LEFT SIDE ------------>
+    <div id="left-side">
+
+        <!------------ PROMPT ------------>
+        <div id="prompt">
+            <p> Prompt </p>
+            <input type="text" id="prompt" name="prompt">
+            <button class="dark-button">Run Comparison</button>
+        </div>
+
+        <!------------ SHARED ------------>
+        <div id="shared">
+            <p>Shared by both runs: <span class="shared-info"> Temperature 0.7 </span></p>
+        </div>
+
+        <!------------ MODEL OPTION ------------>
+        <div class="model-option">
+            <button id="single-model">Single Model</button>
+            <button id="double-model">Double Model</button>
+        </div>
+        
+        <!------------ MODEL ------------>
+        <div class="horizontal-container">
+            <div id="model-1">
+                <div id="model-info-1" class="model-info">
+                    <h1>Baseline</h1>
+                    <p>16-bit * no ablation</p>
+                </div>
+                <p class="model-text" id="model-1-text">The sky looks blue because sunlight scatters off tiny gas molecules in the air. Shorter blue wavelengths satter far more than red ones, so blue light reaches your eyes from every direction.</p>
+
+            </div>
+
+            <div id="model-2">
+                <div id="model-info-2" class="model-info">
+                    <h1>Your Model</h1>
+                    <p>INT8 * 4 heads off * zero ablation</p>
+                </div>
+                <p class="model-text" id="model-2-text">The sky looks blue because sunlight scatters off tiny gas molecules in the air. Shorter blue light is absorbed by the ozone layer, which reflects it back down across the whole sky.</p>
+            </div>
+        </div>
+
+        <!------------ MODEL RESET BUTTON ------------>
+        <div class="horizontal-container">
+            <button id="model-1-reset"> Reset this model </button>
+            <button id="model-2-reset"> Reset this model </button>
+        </div>
+
+        
+
+        <!------------ SHADING ------------>
+        <div class="horizontal-container">
+            <p>Shading: how differently your model predicts each token <span class="low">low</span> <span class="mid">mid</span> <span class="high">high</span> <span>first token that differs</span></p>
+            <p>Hover any token to inspect it</p>
+        </div>
+
+        <!------------ WORD INFO ------------>
+        <div class="word-info">
+            <div class="horizontal-container">
+
+                <div class="vertical-container">
+                    <p>Selected Token</p>
+                    <p id="word">Which</p>
+                    <p>Your Model * position <span id="word-position"></span> * token id <span id="token-id"></span></p>
+                </div>
+                
+                <div class="vertical-container">
+                    <!------------ BASELINE PROBABILITY ------------>
+                    <div class="horizontal-container">
+                        <p> Baseline probability </p>
+                        <p> <span id="model-1-probability">3.0</span>%</p>
+                    </div>
+                    <p>*PERCENT BAR*</p>
+
+                    <!------------ MODEL PROBABILITY ------------>
+                    <div class="horizontal-container">
+                        <p> Your model probability </p>
+                        <p> <span id="model-2-probability">26.0</span>%</p>
+                    </div>
+                    <p>*PERCENT BAR*</p>
+
+                    <hr>
+                    <!------------ DIVERGENCE ------------>
+                    <div class="horizontal-container">
+                        <p> Divergence at this position (KL) </p>
+                        <p id="divergence"> 0.75</p>
+                    </div>
+                </div>
+                
+                <!------------ TOP WORDS ------------>
+                <div class="vertical-container">
+                    <p>Top candidates in your model</p>
+                    <div class="horizontal-container">
+                        <p id="word1"></p>
+                        <p>*PERCENT BAR*</p>
+                        <p><span id="word1-p"></span>%</p>
+                    </div>
+
+                    <div class="horizontal-container">
+                        <p id="word1"></p>
+                        <p>*PERCENT BAR*</p>
+                        <p><span id="word1-p"></span>%</p>
+                    </div>
+
+                    <div class="horizontal-container">
+                        <p id="word1"></p>
+                        <p>*PERCENT BAR*</p>
+                        <p><span id="word1-p"></span>%</p>
+                    </div>
+
+                    <div class="horizontal-container">
+                        <p id="word1"></p>
+                        <p>*PERCENT BAR*</p>
+                        <p><span id="word1-p"></span>%</p>
+                    </div>
+
+                    <div class="horizontal-container">
+                        <p id="word1"></p>
+                        <p>*PERCENT BAR*</p>
+                        <p><span id="word1-p"></span>%</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!------------ OTHER INFO ------------>
+        <div class="horizontal-container">
+            <div class="vertical-container">
+                <p>Decode speed</p>
+                <p id="ds1"></p>
+                <p>Ceiling <span id="max-ds1"></span> tok/s</p>
+            </div>
+
+            <div class="vertical-container">
+                <p>Time to first token</p>
+                <p id="ttft1"></p>
+                <p>Measured live</p>
+            </div>
+
+            <div class="vertical-container">
+                <p>Weight memory</p>
+                <p id="wm1"></p>
+                <p>Incl. shared embedding</p>
+            </div>
+
+            <div class="vertical-container">
+                <p>Decode speed</p>
+                <p id="ds2"></p>
+                <p>Ceiling <span id="max-ds2"></span> tok/s</p>
+            </div>
+
+            <div class="vertical-container">
+                <p>Time to first token</p>
+                <p id="ttft2"></p>
+                <p>Measured live</p>
+            </div>
+
+            <div class="vertical-container">
+                <p>Weight memory</p>
+                <p id="wm2"></p>
+                <p>Incl. shared embedding</p>
+            </div>
+        </div>
+    </div>
+
+
+    <!------------ RIGHT SIDE ------------>
+    <div id="right-side">
+        <!------------ YOUR MODEL ------------>
+        <div class="vertical-container">
+            <p>Your Model</p>
+
+            <p>Weight precision</p>
+            <div class="horizontal-container">
+                <button class="wp"> 16-bit </button>
+                <button class="wp"> INT8 </button>
+                <button class="wp"> INT4 </button>
+            </div>
+
+            <p>Ablation mode</p>
+            <div class="horizontal-container">
+                <button class="am"> Zero </button>
+                <button class="am"> Mean </button>
+            </div>
+
+            <p>Turn off</p>
+            <div class="horizontal-container">
+                <button class="to"> Query heads </button>
+                <button class="to"> KV groups </button>
+            </div>
+        </div>
+
+        <!------------ ATTENTION HEADS ------------>
+        <div class="vertical-container">
+            <div class="horizontal-container">
+                <p>Attention heads</p>
+                <button id="ah-reset"> Reset </button>
+            </div>
+
+            <p>28 layers x 16 query heads, shaded by importance at INT8 from the head-importance experiment. Click a head to turn it off.</p>
+
+            <div class="horizontal-container">
+                <p>L0</p>
+                <p>*GREEN DISPLAY*</p>
+            </div>
+
+            <div class="horizontal-container">
+                <p>L0</p>
+                <p>*GREEN DISPLAY*</p>
+            </div>
+
+            <div class="horizontal-container">
+                <p>L0</p>
+                <p>*GREEN DISPLAY*</p>
+            </div>
+
+            <div class="horizontal-container">
+                <p>L0</p>
+                <p>*GREEN DISPLAY*</p>
+            </div>
+
+            <div class="horizontal-container">
+                <p>L0</p>
+                <p>*GREEN DISPLAY*</p>
+            </div>
+
+            <div class="horizontal-container">
+                <p>L0</p>
+                <p>*GREEN DISPLAY*</p>
+            </div>
+
+            <div class="horizontal-container">
+                <p>L0</p>
+                <p>*GREEN DISPLAY*</p>
+            </div>
+
+            <div class="horizontal-container">
+                <p>Less imporant <span> * * * * * </span> More </p>
+                <p><span> * </span> Off </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
