@@ -1,11 +1,210 @@
-.horizontal-container{
-    display:flex;
-    flex-direction: row;
-    gap:25px;
+/* ==============================================================
+   BASIC STYLE - body, .class and #id selectors only
+   ============================================================= */
+
+/* ---------- PAGE ---------- */
+body{
+    margin-top: 0px;
+    margin-left: 10%;
+    margin-right: 10%;
+    padding-top: 80px;
+    background: #f4f3ef;
+    color: #111;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
 }
 
+/* ---------- LAYOUT HELPERS ---------- */
 .horizontal-container{
-    display:flex;
+    display: flex;
     flex-direction: row;
-    gap:25px;
+    align-items: center;
+    gap: 14px;
+}
+
+.vertical-container{
+    flex: 1;
+    box-sizing: border-box;
+    padding: 4px 18px;
+    font-size: 12px;
+    background: white;
+    border: 1px solid #e4e2dc;
+    border-radius: 12px;
+}
+
+/* ---------- TOP BAR (stays at the top of the browser) ---------- */
+#top-bar{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0 40px;
+    font-size: 11px;
+    background: #fbfaf8;
+    border-bottom: 1px solid #e4e2dc;
+}
+
+/* ---------- LEFT / RIGHT COLUMNS ---------- */
+#left-side{
+    float: left;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 64%;
+    margin: 10px 0 40px 40px;
+}
+
+#right-side{
+    float: right;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 27%;
+    margin: 10px 40px 40px 0;
+}
+
+#right-side .horizontal-container{
+    gap: 6px;
+    justify-content: space-between;
+}
+
+/* ---------- PROMPT ---------- */
+#prompt{
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    gap: 12px;
+    padding: 6px 10px;
+    font-size: 15px;
+    background: white;
+    border: 1px solid #e4e2dc;
+    border-radius: 8px;
+}
+
+/* ---------- SHARED ---------- */
+#shared{
+    font-size: 12px;
+    color: #6b6b66;
+}
+
+.shared-info{
+    padding: 5px 10px;
+    font-family: Consolas, monospace;
+    color: #111;
+    background: white;
+    border: 1px solid #e4e2dc;
+    border-radius: 6px;
+}
+
+/* ---------- MODEL OPTION ---------- */
+.model-option{
+    display: flex;
+    gap: 8px;
+}
+
+/* ---------- MODEL CARDS ---------- */
+#model-1, #model-2{
+    flex: 1;
+    box-sizing: border-box;
+    min-width: 0;
+    min-height: 245px;
+    padding: 4px 24px 18px 24px;
+    background: white;
+    border: 1px solid #e4e2dc;
+    border-radius: 12px;
+}
+
+.model-info{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    font-family: Consolas, monospace;
+    color: #6b6b66;
+}
+
+.model-text{
+    font-size: 16px;
+    line-height: 2.1;
+}
+
+/* ---------- SHADING LEGEND ---------- */
+.low, .mid, .high{
+    padding: 3px 8px;
+    font-size: 12px;
+    border-radius: 4px;
+}
+.low{ background: #fbe3cf; }
+.mid{ background: #f2b98a; }
+.high{ background: #e88f50; }
+
+/* ---------- WORD INFO ---------- */
+.word-info{
+    padding: 4px 24px;
+    background: white;
+    border: 1px solid #e4e2dc;
+    border-radius: 12px;
+}
+
+.word-info .horizontal-container{
+    align-items: flex-start;
+    gap: 30px;
+}
+
+.word-info .vertical-container{
+    padding: 0;
+    background: none;
+    border: none;
+}
+
+#word{
+    margin: 4px 0;
+    font-family: Consolas, monospace;
+    font-size: 26px;
+    font-weight: bold;
+}
+
+#divergence, #word1, #word1-p{
+    font-family: Consolas, monospace;
+}
+
+/* ---------- STATS (decode speed, time to first token, memory) ---------- */
+#ds1, #ttft1, #wm1, #ds2, #ttft2, #wm2{
+    margin: 6px 0;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+/* ---------- BUTTONS: all grey ---------- */
+.wp, .am, .to, #single-model, #double-model, #model-1-reset, #model-2-reset, #ah-reset{
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: bold;
+    color: #111;
+    background: #dcdad4;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.wp, .am, .to, #model-1-reset, #model-2-reset{
+    flex: 1;
+}
+
+/* ---------- BUTTON: Run comparison (dark) ---------- */
+.dark-button{
+    padding: 12px 24px;
+    font-size: 13px;
+    font-weight: bold;
+    color: white;
+    background: #111;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
 }
