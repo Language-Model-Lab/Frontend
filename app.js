@@ -56,6 +56,22 @@ const modelReset = document.getElementById("model-reset");
 const form1 = document.querySelector('#input-prompt-1 .generate-form');
 const form2 = document.querySelector('#input-prompt-2 .generate-form');
 
+const max_token1 = form1.querySelector('[name="max-token1"]');
+const do_sample1 = form1.querySelector('[name="do-sample1"]');
+const temperature1 = form1.querySelector('[name="temperature1"]');
+const top_k1 = form1.querySelector('[name="top-k1"]');
+const top_p1 = form1.querySelector('[name="top-p1"]');
+const repetition_penalty1 = form1.querySelector('[name="repetition-penalty1"]');
+const enable_thinking1 = form1.querySelector('[name="enable-thinking1"]');
+
+const max_token2 = form2.querySelector('[name="max-token2"]');
+const do_sample2 = form2.querySelector('[name="do-sample2"]');
+const temperature2 = form2.querySelector('[name="temperature2"]');
+const top_k2 = form2.querySelector('[name="top-k2"]');
+const top_p2 = form2.querySelector('[name="top-p2"]');
+const repetition_penalty2 = form2.querySelector('[name="repetition-penalty2"]');
+const enable_thinking2 = form2.querySelector('[name="enable-thinking2"]');
+
 
 // Reset button 1 and 2 creation
 const reset1 = document.createElement('button');
@@ -125,6 +141,77 @@ doubleModel.addEventListener('click', function(){
 
 // Call single button
 modelReset.replaceChildren(reset2);
+
+// Check out of bound inputs
+max_token1.addEventListener('input', function(){
+    const val = parseInt(max_token1.value);
+    if(isNaN(val)) return;
+    if(val < 0) max_token1.value = 0;
+    if(val > 100) max_token1.value = 100;
+});
+
+temperature1.addEventListener('input', function(){
+    const val = parseFloat(temperature1.value);
+    if(isNaN(val)) return;
+    if(val < 0) temperature1.value = 0;
+    if(val > 10) temperature1.value = 10;
+});
+
+top_k1.addEventListener('input', function(){
+    const val = parseInt(top_k1.value);
+    if(isNaN(val)) return;
+    if(val < 0) top_k1.value = 0;
+    if(val > 100) top_k1.value = 100;
+});
+
+top_p1.addEventListener('input', function(){
+    const val = parseFloat(top_p1.value);
+    if(isNaN(val)) return;
+    if(val < 0) top_p1.value = 0;
+    if(val > 50) top_p1.value = 50;
+})
+
+repetition_penalty1.addEventListener('input', function(){
+    const val = parseFloat(repetition_penalty1.value);
+    if(isNaN(val)) return;
+    if(val < 0) repetition_penalty1.value = 0;
+    if(val > 1) repetition_penalty1.value = 1;
+})
+
+max_token2.addEventListener('input', function(){
+    const val = parseInt(max_token2.value);
+    if(isNaN(val)) return;
+    if(val < 0) max_token2.value = 0;
+    if(val > 100) max_token2.value = 100;
+});
+
+temperature2.addEventListener('input', function(){
+    const val = parseFloat(temperature2.value);
+    if(isNaN(val)) return;
+    if(val < 0) temperature2.value = 0;
+    if(val > 10) temperature2.value = 10;
+});
+
+top_k2.addEventListener('input', function(){
+    const val = parseInt(top_k2.value);
+    if(isNaN(val)) return;
+    if(val < 0) top_k2.value = 0;
+    if(val > 100) top_k2.value = 100;
+});
+
+top_p2.addEventListener('input', function(){
+    const val = parseFloat(top_p2.value);
+    if(isNaN(val)) return;
+    if(val < 0) top_p2.value = 0;
+    if(val > 1) top_p2.value = 1;
+})
+
+repetition_penalty2.addEventListener('input', function(){
+    const val = parseFloat(repetition_penalty2.value);
+    if(isNaN(val)) return;
+    if(val < 0) repetition_penalty2.value = 0;
+    if(val > 50) repetition_penalty2.value = 50;
+})
 
 
 // TOGGLE INTERVENTION VISABILITY
