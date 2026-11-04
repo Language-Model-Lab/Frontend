@@ -1,58 +1,51 @@
-// DEBUG BUTTON
-const debug1 = document.getElementById("debug-1");
-const debug2 = document.getElementById("debug-2");
-const debug3 = document.getElementById("debug-3");
-const debug4 = document.getElementById("debug-4");
-const debug5 = document.getElementById("debug-5");
-const debug6 = document.getElementById("debug-6");
+// TUTORIAL
+const fileExtension = ".png"; 
+const totalImages = 5;
+let currentStep = 1;
 
-async function loadData(){
-    const response = await fetch("request_attention_intervention.json");
-    const data = await response.json(); 
-    console.log(data);
+const helpBtn = document.getElementById('helpBtn');
+const tutorialWrapper = document.getElementById('tutorialWrapper');
+const tutorialImg = document.getElementById('tutorialImg');
+const stepText = document.getElementById('stepText');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+
+// 1. Core Image Swapping Function
+function renderStep() {
+  // Dynamically points to "tutorial1.png", "tutorial2.png", etc.
+  tutorialImg.src = `img/tutorial/tutorial${currentStep}${fileExtension}`;
+  stepText.textContent = `Step ${currentStep} of ${totalImages}`;
+  
+  // Grey out arrows if at boundaries
+  prevBtn.disabled = (currentStep === 1);
+  nextBtn.disabled = (currentStep === totalImages);
 }
 
-debug1.addEventListener("click", async function(){
-    const response = await fetch("request_attention_intervention.json");
-    const data = await response.json();
-    document.getElementById("model-1-text").textContent = data.prompt;
-    document.getElementById("model-2-text").textContent = data.prompt;
-})
+// 2. Toggle Hidden/Unhidden Logic
+helpBtn.addEventListener('click', () => {
+  if (tutorialWrapper.style.display === 'none' || tutorialWrapper.style.display === '') {
+    currentStep = 1; // Always reset to step 1 on open
+    renderStep();
+    tutorialWrapper.style.display = 'block'; // Unhide
+  } else {
+    tutorialWrapper.style.display = 'none';  // Hide
+  }
+});
 
-debug2.addEventListener("click", async function(){
-    const response = await fetch("request_mlp_intervention.json");
-    const data = await response.json();
-    document.getElementById("model-1-text").textContent = data.prompt;
-    document.getElementById("model-2-text").textContent = data.prompt;
-})
+// 3. Arrow Click Handlers
+prevBtn.addEventListener('click', () => {
+  if (currentStep > 1) {
+    currentStep--;
+    renderStep();
+  }
+});
 
-debug3.addEventListener("click", async function(){
-    const response = await fetch("request_no_intervention.json");
-    const data = await response.json();
-    document.getElementById("model-1-text").textContent = data.prompt;
-    document.getElementById("model-2-text").textContent = data.prompt;
-})
-
-debug4.addEventListener("click", async function(){
-    const response = await fetch("successful_response_sample.json");
-    const data = await response.json();
-    document.getElementById("model-1-text").textContent = data.condition_a_text;
-    document.getElementById("model-2-text").textContent = data.condition_b_text;
-})
-
-debug5.addEventListener("click", async function(){
-    const response = await fetch("validation_error_generic.json");
-    const data = await response.json();
-    document.getElementById("model-1-text").textContent = "ERROR RESPONSE (Validation Error)";
-    document.getElementById("model-2-text").textContent = "ERROR RESPONSE (Validation Error)";
-})
-
-debug6.addEventListener("click", async function(){
-    const response = await fetch("validation_error_top_p_sample.json");
-    const data = await response.json();
-    document.getElementById("model-1-text").textContent = "ERROR RESPONSE (Not enough words)";
-    document.getElementById("model-2-text").textContent = "ERROR RESPONSE (Not enough words)";
-})
+nextBtn.addEventListener('click', () => {
+  if (currentStep < totalImages) {
+    currentStep++;
+    renderStep();
+  }
+});
 
 // MODEL OPTION
 const singleModel = document.getElementById("single-model");
@@ -134,12 +127,11 @@ doubleModel.addEventListener('click', function(){
 modelReset.replaceChildren(reset2);
 
 
-
 // TOGGLE INTERVENTION VISABILITY
-const interventionToggle = document.getElementById("intervention-toggle");
+const interventionToggleA = document.getElementById("intervention-toggle-a");
 const interventionVisibility = document.querySelector('#intervention .generate-form');
-interventionToggle.addEventListener('change', function(){
-    if (interventionToggle.checked) {
+interventionToggleA.addEventListener('change', function(){
+    if (interventionToggleA.checked) {
         interventionVisibility.style.display = '';
     } 
     else {
@@ -229,7 +221,7 @@ run.addEventListener("click", async function(){
 
     let generation2;
 
-    if(interventionToggle.checked == false){
+    if(interventionToggleA.checked == false){
         generation2 = {
             generation:{
                 max_new_tokens: parseInt(form2.querySelector('[name="max-token2"]').value),
@@ -350,9 +342,3 @@ run.addEventListener("click", async function(){
     }
 })
 
-
-
-
-
-
-loadData();
